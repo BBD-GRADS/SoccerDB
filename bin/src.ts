@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
-import { SrcStack } from "../lib/src-stack";
+import { SoccerDbStack } from "../lib/soccer-db-stack";
 
 const app = new cdk.App();
-new SrcStack(app, "SrcStack", {
+new SoccerDbStack(app, "soccerDbStack", {
   tags: {
-    owner: "rudolphe@bbd.co.za",
-    "created-using": "terraform",
+    owner: "jacques.mouton@bbd.co.za",
+    "created-using": "cdk",
   },
   env: { account: "683044484462", region: "eu-west-1" },
 });
