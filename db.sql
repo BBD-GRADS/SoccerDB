@@ -45,7 +45,7 @@ CREATE TABLE [dbo].[Player] (
     [PositionID] [int] NOT NULL, 
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
-    [DateOfBirth] [datetime2] NULL,
+    [DateOfBirth] [datetime2] NOT NULL,
 
     FOREIGN KEY (PositionID) REFERENCES [dbo].PositionCode(PositionID)
 );
@@ -64,8 +64,8 @@ GO
 
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] PRIMARY KEY NOT NULL,
-    [GoalsFor] [int] NOT NULL, 
-    [GoalsAgainst] [int] NOT NULL,
+    [GoalsFor] [int] NULL, 
+    [GoalsAgainst] [int] NULL,
 
     FOREIGN KEY (ResultID) REFERENCES [dbo].Fixture(FixtureID)
 );
@@ -75,13 +75,13 @@ CREATE TABLE [dbo].[PlayerFixtureStats] (
     [PlayerFixtureStatsID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [PlayerID] [int] NOT NULL, 
     [FixtureID] [int] NOT NULL, 
-    [Saves] [int] NOT NULL,
-    [Assists] [int] NOT NULL,
-    [Goals] [int] NOT NULL,
-    [Tackles] [int] NOT NULL,
-    [YellowCards] [int] NOT NULL,
-    [RedCards] [int] NOT NULL,
-    [Fouls] [int] NOT NULL,
+    [Saves] [int]  NULL,
+    [Assists] [int]  NULL,
+    [Goals] [int]  NULL,
+    [Tackles] [int]  NULL,
+    [YellowCards] [int] NULL,
+    [RedCards] [int] NULL,
+    [Fouls] [int]  NULL,
 
     FOREIGN KEY (PlayerID) REFERENCES [dbo].Player(PlayerID),
     FOREIGN KEY (FixtureID) REFERENCES [dbo].Fixture(FixtureID)
