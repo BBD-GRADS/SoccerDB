@@ -44,12 +44,14 @@ GO
 
 CREATE TABLE [dbo].[Player] (
     [PlayerID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [PositionID] [int] NOT NULL, 
+    [PositionID] [int] NOT NULL,
+	[TeamID] [int] NOT NULL,
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
     [DateOfBirth] [date] NULL,
-
-    FOREIGN KEY (PositionID) REFERENCES [dbo].PositionCode(PositionID)
+	
+	FOREIGN KEY (PositionID) REFERENCES [dbo].PositionCode(PositionID),
+	FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID)
 );
 GO
 
