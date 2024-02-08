@@ -134,3 +134,49 @@ VALUES (1, 'Ed', 'Frederick', '2007-12-31', 16) ,
 
 SET IDENTITY_INSERT Player OFF
 GO
+
+SET IDENTITY_INSERT StaffCode ON
+INSERT INTO [dbo].[StaffCode]
+				([StaffCodeID],
+				[StaffCodeType])
+VALUES 	(1, 'Coach'),
+		(2, 'AssistantCoach'),
+		(3, 'Physio'),
+		(4, 'Accountant')
+SET IDENTITY_INSERT StaffCode OFF
+GO
+
+SET IDENTITY_INSERT Staff ON
+INSERT INTO [dbo].Staff
+				([StaffID],
+				[StaffCode],
+				[Name],
+				[Surname])
+VALUES 	(1, 1, 'Petra', 'Skuba'),
+		(2, 2, 'Raymon', 'Sigh'),
+		(3, 3, 'Dorothy', 'Kincey'),
+		(4, 4, 'Red', 'Scheer'),
+		(5, 1, 'Erik', 'Ten Hag'),
+		(6, 2, 'Jurgen', 'Klopp'),
+		(7, 3, 'Pep', 'Guardiola'),
+		(8, 3, 'Lorin', 'McKay'),
+		(9, 1, 'Rassie', 'Erasmus'),
+		(10, 2, 'Werner', 'Kok'),
+		(11, 3, 'Fred', 'Murray'),
+		(12, 2, 'Lara', 'Croft'),
+		(13, 1, 'Jacques', 'Nienaber'),
+		(14, 2, 'Abbie', 'Lindsay'),
+		(15, 3, 'Diego', 'Lewis'),
+		(16, 2, 'Arvin', 'Robinson'),
+		(17, 1, 'John', 'Smith'),
+		(18, 2, 'Victor', 'Matfield'),
+		(19, 3, 'Siya', 'Kolisi'),
+		(20, 2, 'Kurt-lee', 'Arendse'),
+		(21, 1, 'Bongi', 'Mbonambi'),
+		(22, 2, 'Duane', 'Vermeulen'),
+		(23, 2, 'Faf', 'de Klerk'),
+		(24, 3, 'Malcolm', 'Marx'),
+		(25, 3, 'Pieter-Steph', 'du Toit')
+SET IDENTITY_INSERT Staff OFF
+GO
+
