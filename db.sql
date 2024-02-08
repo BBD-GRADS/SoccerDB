@@ -1,6 +1,8 @@
 USE master;
 GO
 
+ALTER DATABASE [SoccerDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+
 DROP DATABASE IF EXISTS [SoccerDB];
 
 CREATE DATABASE SoccerDB;
@@ -45,7 +47,7 @@ CREATE TABLE [dbo].[Player] (
     [PositionID] [int] NOT NULL, 
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
-    [DateOfBirth] [datetime2] NULL,
+    [DateOfBirth] [date] NULL,
 
     FOREIGN KEY (PositionID) REFERENCES [dbo].PositionCode(PositionID)
 );
