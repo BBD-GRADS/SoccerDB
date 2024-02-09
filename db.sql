@@ -9,26 +9,27 @@ GO
 USE SoccerDB;
 GO
 
-CREATE TABLE [dbo].[StaffCode] (
-    [StaffCodeID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [StaffCodeType] [varchar](120) NOT NULL
-);
-GO
-
 CREATE TABLE [dbo].[Team] (
     [TeamID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
     [Name] [varchar](120) NOT NULL,
 );
 GO
 
+CREATE TABLE [dbo].[StaffCode] (
+    [StaffCodeID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    [StaffCodeType] [varchar](120) NOT NULL
+);
+GO
+
 CREATE TABLE [dbo].[Staff] (
     [StaffID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [StaffCode] [int] NOT NULL,
+    [StaffCodeID] [int] NOT NULL,
     [TeamID] [int] NOT NULL,
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
 
-    FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID)
+    FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
+    FOREIGN KEY (StaffCodeID) REFERENCES [dbo].StaffCode(StaffCodeID)
 );
 GO
 
