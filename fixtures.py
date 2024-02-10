@@ -1,6 +1,7 @@
+from random import choice
 from playerData import random_date
 
-data = []
+fixtures = []
 teamID = [1, 2, 3, 4, 5]
 opponents = [['Manchester United', 'Liverpool', 'Tottenham Hotspur', 'Sundowns', 'Pirates'],
              ['Everton', 'Man City', 'Chiefs', 'Lions', 'Bulls'],
@@ -10,19 +11,28 @@ opponents = [['Manchester United', 'Liverpool', 'Tottenham Hotspur', 'Sundowns',
 
 runner = 0
 slower = 0
+tID = -1
+temp = ()
 for i in range(1, 51):
-    temp = (
-        i, teamID[slower], opponents[slower][runner], 1 if i <= 25 else 0, random_date(2024, 2024).strftime('%Y-%m-%d') + ' 17:00')
+    if i in range(1, 11):
+        tID = 1
+    elif i in range(11, 21):
+        tID = 2
+    elif i in range(21, 31):
+        tID = 3
+    elif i in range(31, 41):
+        tID = 4
+    elif i in range(41, 51):
+        tID = 5
 
+    temp = (
+        i, tID, opponents[tID - 1][runner], 0 if i % 2 == 0 else 1,
+        random_date(2024, 2024).strftime('%Y-%m-%d') + ' ' + choice(['17:00', '15:00', '13:00']))
     runner = runner + 1
     if runner == 5:
         runner = 0
-        slower = slower + 1
-    if slower == 5:
-        slower = 0
-
-    data.append(temp)
+    fixtures.append(temp)
 
 # Print the list
-for item in data:
+for item in fixtures:
     print(item, ',')

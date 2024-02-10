@@ -68,10 +68,12 @@ GO
 
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] PRIMARY KEY NOT NULL,
+	[FixtureID] [int] NOT NULL,
     [GoalsFor] [int] NOT NULL, 
     [GoalsAgainst] [int] NOT NULL,
 
-    FOREIGN KEY (ResultID) REFERENCES [dbo].Fixture(FixtureID)
+    FOREIGN KEY (FixtureID) REFERENCES [dbo].Fixture(FixtureID)
+
 );
 GO
 
