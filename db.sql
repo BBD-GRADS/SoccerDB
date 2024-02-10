@@ -41,7 +41,7 @@ GO
 
 CREATE TABLE [dbo].[Player] (
     [PlayerID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [PositionID] [int] NOT NULL, 
+    [PositionCode] [int] NOT NULL, 
     [TeamID] [int] NOT NULL,
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
