@@ -12,6 +12,7 @@ GO
 CREATE TABLE [dbo].[Team] (
     [TeamID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
     [Name] [varchar](120) NOT NULL,
+    [IsOurClub] [bit] NOT NULL DEFAULT 1
 );
 GO
 
@@ -41,13 +42,13 @@ GO
 
 CREATE TABLE [dbo].[Player] (
     [PlayerID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    [PositionCode] [int] NOT NULL, 
+    [PositionCodeID] [int] NOT NULL, 
     [TeamID] [int] NOT NULL,
     [Name] [varchar](120) NOT NULL,
     [Surname] [varchar](120) NOT NULL,
     [DateOfBirth] [date] NULL,
 
-    FOREIGN KEY (PositionID) REFERENCES [dbo].PositionCode(PositionID),
+    FOREIGN KEY (PositionCodeID) REFERENCES [dbo].PositionCode(PositionID),
     FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
 
     CONSTRAINT ChkDatePast CHECK ([DateOfBirth] < GETDATE() OR [DateOfBirth] IS NULL)
