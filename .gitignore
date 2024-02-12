@@ -30,7 +30,6 @@ local.properties
 ######################
 log/
 *.log
-*.sql
 *.sqlite
 
 # OS generated files #
@@ -58,6 +57,9 @@ xcuserdata/
 
 # VSCode
 .vscode
+__pycache__
+.vs
+=======
 
 *.js
 !jest.config.js

@@ -1,0 +1,41 @@
+name: Deploy DB Changes
+
+on:
+  workflow_dispatch:
+    inputs:
+      changelogFileName:
+        description: "Changelog file name"
+        type: string
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.1
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Get secrets from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2.0.1
+        with:
+          secret-ids: SM, ${{ vars.AWS_SECRET_NAME }}
+          parse-json-secrets: true
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install project dependencies
+        run: npm install
+
+      - name: Deploy Database Updates
+        run: npx node-liquibase update --changeLogFile="scripts/${{ inputs.changelogFileName }}" --url="jdbc:sqlserver://${{ env.SM_HOST }}:${{ env.SM_PORT }}" --classpath="node_modules/liquibase/dist/drivers/mssql-jdbc-7.4.1.jre8.jar" --username=${{ env.SM_USERNAME }} --password=${{ env.SM_PASSWORD }} --log-level=debug
