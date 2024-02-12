@@ -1,7 +1,7 @@
 USE SoccerDB;
 GO
 
-CREATE VIEW FixtureResultsView AS
+CREATE VIEW ViewFixtureResults AS
 SELECT
     Fixture.FixtureID,
     Team.Name AS TeamName,
