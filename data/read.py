@@ -1,5 +1,15 @@
 import numpy as np
 
+def read_fixtures() -> list:
+    FIXTURES_FILE = "fixtures.txt"
+    fixtures = []
+
+    with open(FIXTURES_FILE, "r") as file:
+        for line in file.readlines():
+            clean_line = line.strip().split(",")
+            fixtures.append(clean_line)
+
+    return fixtures
 
 def read_teams() -> list:
     TEAM_FILE = "teams.txt"
