@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset ivan:1
+
 SET
     IDENTITY_INSERT StaffCode ON
 INSERT INTO
@@ -1376,4 +1379,3 @@ VALUES
     (1000, 100, 50, 0, 1, 3, 5, 1, 2, 0)
 SET
     IDENTITY_INSERT PlayerFixtureStats OFF
-GO
