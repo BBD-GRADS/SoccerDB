@@ -38,4 +38,4 @@ jobs:
         run: npm install
 
       - name: Deploy Database Updates
-        run: npx node-liquibase update --changeLogFile="scripts/${{ inputs.changelogFileName }}" --url="jdbc:sqlserver://${{ env.SM_HOST }}:${{ env.SM_PORT }}" --classpath="node_modules/liquibase/dist/drivers/mssql-jdbc-7.4.1.jre8.jar" --username=${{ env.SM_USERNAME }} --password=${{ env.SM_PASSWORD }} --log-level=debug
+        run: npx node-liquibase update --changeLogFile="scripts/${{ inputs.changelogFileName }}" --url="jdbc:sqlserver://${{ env.SM_HOST }}:${{ env.SM_PORT }};databaseName=SoccerDB" --classpath="node_modules/liquibase/dist/drivers/mssql-jdbc-7.4.1.jre8.jar" --username=${{ env.SM_USERNAME }} --password=${{ env.SM_PASSWORD }} --log-level=debug
