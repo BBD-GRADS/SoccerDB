@@ -7,12 +7,6 @@
 out/
 local.properties
 
-# Generic Android ignores #
-###########################
-bin/
-target
-gen/
-
 # Compiled source #
 ###################
 *.com
@@ -65,3 +59,13 @@ xcuserdata/
 .vscode
 __pycache__
 .vs
+=======
+
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
