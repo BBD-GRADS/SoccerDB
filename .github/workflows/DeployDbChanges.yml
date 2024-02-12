@@ -29,13 +29,10 @@ jobs:
           secret-ids: SM, ${{ vars.AWS_SECRET_NAME }}
           parse-json-secrets: true
 
-      - name: Install node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install project dependencies
-        run: npm install
-
       - name: Deploy Database Updates
-        run: npx node-liquibase update --changeLogFile="scripts/${{ inputs.changelogFileName }}" --url="jdbc:sqlserver://${{ env.SM_HOST }}:${{ env.SM_PORT }};databaseName=SoccerDB" --classpath="node_modules/liquibase/dist/drivers/mssql-jdbc-7.4.1.jre8.jar" --username=${{ env.SM_USERNAME }} --password=${{ env.SM_PASSWORD }} --log-level=debug
+        uses: liquibase-github-actions/update@v4.26.0
+        with:
+          changelogFile: scripts/${{ inputs.changelogFileName }}
+          url: jdbc:sqlserver://${{ env.SM_HOST }}:${{ env.SM_PORT }};databaseName=SoccerDB;encrypt=false
+          password: ${{ env.SM_PASSWORD }}
+          username: ${{ env.SM_USERNAME }}
