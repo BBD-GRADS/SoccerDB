@@ -71,7 +71,7 @@ GO
 
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] PRIMARY KEY NOT NULL,
-    [FixtureID] [int] [int] NOT NULL,
+    [FixtureID] [int] NOT NULL,
     [GoalsFor] [int] NOT NULL DEFAULT 0, 
     [GoalsAgainst] [int] NOT NULL DEFAULT 0,
 
