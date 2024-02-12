@@ -1,24 +1,23 @@
 USE SoccerDB;
 GO
 
-ALTER VIEW FixtureResults AS
+CREATE VIEW FixtureResultsView AS
 SELECT
-    f.FixtureID,
-    t.Name AS TeamName,
-    f.Opponent,
-    f.Date,
+    Fixture.FixtureID,
+    Team.Name AS TeamName,
+    Opponent.Name AS OpponentName,
+    Fixture.Date,
     CASE
-        WHEN r.GoalsFor > r.GoalsAgainst THEN 'Win'
-        WHEN r.GoalsFor < r.GoalsAgainst THEN 'Loss'
+        WHEN Result.GoalsFor > Result.GoalsAgainst THEN 'Win'
+        WHEN Result.GoalsFor < Result.GoalsAgainst THEN 'Loss'
         ELSE 'Draw'
     END AS Result
 FROM
-    dbo.Fixture f
+    dbo.Fixture Fixture
 JOIN
-    dbo.Team t ON f.TeamID = t.TeamID
+    [dbo].Team Team ON Fixture.TeamID = Team.TeamID
+JOIN
+    [dbo].Team Opponent ON Fixture.OpponentID = Opponent.TeamID
 LEFT JOIN
-    dbo.Result r ON f.FixtureID = r.ResultID;
+    [dbo].Result Result ON Fixture.FixtureID = Result.ResultID;
 GO
-
--- view the db
-SELECT * FROM dbo.FixtureResults;
