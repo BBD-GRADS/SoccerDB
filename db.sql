@@ -71,10 +71,11 @@ GO
 
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] PRIMARY KEY NOT NULL,
+    [FixtureID] [int] [int] NOT NULL,
     [GoalsFor] [int] NOT NULL DEFAULT 0, 
     [GoalsAgainst] [int] NOT NULL DEFAULT 0,
 
-    FOREIGN KEY (ResultID) REFERENCES [dbo].Fixture(FixtureID),
+    FOREIGN KEY (FixtureID) REFERENCES [dbo].Fixture(FixtureID),
 
     CONSTRAINT ChkPositiveGoalsFor CHECK ([GoalsFor] >= 0),
     CONSTRAINT ChkPositiveGoalsAgainst CHECK ([GoalsAgainst] >= 0)
