@@ -9,6 +9,7 @@ VALUES
     (4, 'Accountant')
 SET
     IDENTITY_INSERT StaffCode OFF
+
 SET
     IDENTITY_INSERT PositionCode ON
 INSERT INTO
@@ -33,6 +34,7 @@ VALUES
     (17, 'ST')
 SET
     IDENTITY_INSERT PositionCode OFF
+
 SET
     IDENTITY_INSERT Team ON
 INSERT INTO
@@ -74,6 +76,7 @@ VALUES
     (30, 'Toulon', 0)
 SET
     IDENTITY_INSERT Team OFF
+
 SET
     IDENTITY_INSERT Staff ON
 INSERT INTO
@@ -112,6 +115,7 @@ VALUES
     (25, 1, 13, 'John', 'Sigh')
 SET
     IDENTITY_INSERT Staff OFF
+
 SET
     IDENTITY_INSERT Player ON
 INSERT INTO
@@ -226,7 +230,7 @@ VALUES
     (100, 'Horace', 'Gordon', '2010-04-06', 16, 5)
 SET
     IDENTITY_INSERT Player OFF
-GO
+
 SET
     IDENTITY_INSERT Fixture ON
 INSERT INTO
@@ -288,6 +292,11 @@ VALUES
     (48, 5, 28, 0, '2024-06-16 17:00'),
     (49, 5, 29, 1, '2024-02-20 15:00'),
     (50, 5, 30, 0, '2024-03-16 17:00')
+SET
+    IDENTITY_INSERT Fixture OFF
+
+SET
+    IDENTITY_INSERT Result ON
 INSERT INTO
     [dbo].[Result] (
         [ResultID],
@@ -346,7 +355,9 @@ VALUES
     (48, 48, 1, 1),
     (49, 49, 1, 1),
     (50, 50, 1, 3)
-GO
+SET
+    IDENTITY_INSERT Result OFF
+
 SET
     IDENTITY_INSERT PlayerFixtureStats ON
 INSERT INTO
