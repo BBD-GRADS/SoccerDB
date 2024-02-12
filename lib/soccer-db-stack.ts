@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { aws_ec2 as ec2, aws_rds as rds, aws_iam as iam } from "aws-cdk-lib";
+import { aws_ec2 as ec2, aws_rds as rds } from "aws-cdk-lib";
 
 export class SoccerDbStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -22,10 +22,12 @@ export class SoccerDbStack extends cdk.Stack {
 
     const soccerDbSG = new ec2.SecurityGroup(this, "soccerDbSG", {
       vpc,
+      allowAllOutbound: false,
     });
-
+    
     soccerDbSG.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433)); //remove with host
-
+    soccerDbSG.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433))
+    
     // const bastionHostSG = new ec2.SecurityGroup(this, "bastionHostSG", {
     //   vpc,
     //   allowAllOutbound: false,
@@ -60,7 +62,8 @@ export class SoccerDbStack extends cdk.Stack {
     //   ],
     // });
 
-    const dbInstance = new rds.DatabaseInstance(this, "soccerDb", {
+    const dbInstance = new rds.DatabaseInstance(this, "soccerDbInstance", {
+      
       engine: rds.DatabaseInstanceEngine.sqlServerEx({
         version: rds.SqlServerEngineVersion.VER_16,
       }),
@@ -73,10 +76,10 @@ export class SoccerDbStack extends cdk.Stack {
         subnetType: ec2.SubnetType.PUBLIC, //private with host
       },
       allocatedStorage: 20,
-      //databaseName: "soccerDb",
+      // databaseName: "soccerDb",
       publiclyAccessible: true, //false with host
       deletionProtection: false,
-      credentials: rds.Credentials.fromGeneratedSecret("admin"),
+      credentials: rds.Credentials.fromGeneratedSecret('admin', {secretName: 'soccerDbInstanceSecret'}),
       securityGroups: [soccerDbSG],
     });
     //dbInstance.connections.allowFrom(host, ec2.Port.tcp(1433));
