@@ -63,3 +63,5 @@ xcuserdata/
 
 # VSCode
 .vscode
+__pycache__
+.vs
