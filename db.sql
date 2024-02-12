@@ -58,11 +58,12 @@ GO
 CREATE TABLE [dbo].[Fixture] (
     [FixtureID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
     [TeamID] [int] NOT NULL, 
-    [Opponent] [varchar](120) NOT NULL,
+    [OpponentID] [int] NOT NULL,
     [Away] [bit] NOT NULL,
     [Date] [datetime2] NULL,
 
-    FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID)
+    FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
+    FOREIGN KEY (OpponentID) REFERENCES [dbo].Team(TeamID)
 );
 GO
 
