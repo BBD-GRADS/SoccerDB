@@ -1,13 +1,10 @@
 import * as cdk from "aws-cdk-lib";
-import {Construct} from "constructs";
-import {aws_ec2 as ec2, aws_iam as iam, aws_rds as rds} from "aws-cdk-lib";
-
-export interface GitHubStackProps extends cdk.StackProps {
-    readonly repositoryConfig: { owner: string; repo: string; filter?: string }[];
-}
+import { Construct } from "constructs";
+import { aws_ec2 as ec2, aws_iam as iam, aws_rds as rds } from "aws-cdk-lib";
+import { GitHubStackProps } from "./github-stack-props";
 
 export class SoccerDbStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, props?: GitHubStackProps) {
         super(scope, id, props);
 
         const vpc = new ec2.Vpc(this, "soccerDbVpc", {
@@ -96,12 +93,7 @@ export class SoccerDbStack extends cdk.Stack {
             clientIds: ['sts.amazonaws.com'],
         });
 
-        const ghProps: GitHubStackProps = {
-            repositoryConfig: [
-                {owner: 'jmouton19', repo: 'SoccerDB'}]
-        };
-
-        const iamRepoDeployAccess = ghProps.repositoryConfig.map(
+        const iamRepoDeployAccess = props?.repositoryConfig.map(
             (r) => `repo:${r.owner}/${r.repo}:${r.filter ?? '*'}`
         );
 
