@@ -9,7 +9,8 @@ new SoccerDbStack(app, "soccerDbStack", {
         owner: "jacques.mouton@bbd.co.za",
         "created-using": "cdk",
     },
-    env: {account: "683044484462", region: "eu-wes t-1"},
+    env: { account: "683044484462", region: "eu-wes t-1" },
     repositoryConfig: [
-        {owner: 'jmouton19', repo: 'SoccerDB'}]
+        { owner: 'jmouton19', repo: 'SoccerDB' }
+    ]
 });
