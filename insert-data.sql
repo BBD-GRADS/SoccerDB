@@ -237,7 +237,7 @@ INSERT INTO
     [dbo].[Fixture] (
         [FixtureID],
         [TeamID],
-        [Opponent],
+        [OpponentID],
         [Away],
         [Date]
     )
