@@ -1,15 +1,5 @@
-USE master;
-GO
-
-ALTER DATABASE [SoccerDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-
-DROP DATABASE IF EXISTS [SoccerDB];
-
-CREATE DATABASE SoccerDB;
-GO
-
-USE SoccerDB;
-GO
+--liquibase formatted sql
+--changeset verushan:1
 
 CREATE TABLE [dbo].[Team] (
     [TeamID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
