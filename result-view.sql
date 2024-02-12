@@ -1,5 +1,5 @@
-USE SoccerDB;
-GO
+--liquibase formatted sql
+--changeset faheemah:1
 
 CREATE VIEW ViewFixtureResults AS
 SELECT
@@ -20,4 +20,3 @@ JOIN
     [dbo].Team Opponent ON Fixture.OpponentID = Opponent.TeamID
 LEFT JOIN
     [dbo].Result Result ON Fixture.FixtureID = Result.ResultID;
-GO
