@@ -6,13 +6,11 @@ CREATE TABLE [dbo].[Team] (
     [Name] [varchar](120) NOT NULL,
     [IsOurClub] [bit] NOT NULL DEFAULT 1
 );
-GO
 
 CREATE TABLE [dbo].[StaffCode] (
     [StaffCodeID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
     [StaffCodeType] [varchar](120) NOT NULL
 );
-GO
 
 CREATE TABLE [dbo].[Staff] (
     [StaffID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -24,13 +22,11 @@ CREATE TABLE [dbo].[Staff] (
     FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
     FOREIGN KEY (StaffCodeID) REFERENCES [dbo].StaffCode(StaffCodeID)
 );
-GO
 
 CREATE TABLE [dbo].[PositionCode] (
     [PositionID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
     [PositionName] [varchar](120) NOT NULL
 );
-GO
 
 CREATE TABLE [dbo].[Player] (
     [PlayerID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -45,7 +41,6 @@ CREATE TABLE [dbo].[Player] (
 
     CONSTRAINT ChkDatePast CHECK ([DateOfBirth] < GETDATE() OR [DateOfBirth] IS NULL)
 );
-GO
 
 CREATE TABLE [dbo].[Fixture] (
     [FixtureID] [int] IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -57,7 +52,6 @@ CREATE TABLE [dbo].[Fixture] (
     FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
     FOREIGN KEY (OpponentID) REFERENCES [dbo].Team(TeamID)
 );
-GO
 
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
@@ -70,7 +64,6 @@ CREATE TABLE [dbo].[Result] (
     CONSTRAINT ChkPositiveGoalsFor CHECK ([GoalsFor] >= 0),
     CONSTRAINT ChkPositiveGoalsAgainst CHECK ([GoalsAgainst] >= 0)
 );
-GO
 
 CREATE TABLE [dbo].[PlayerFixtureStats] (
     [PlayerFixtureStatsID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
@@ -97,4 +90,3 @@ CREATE TABLE [dbo].[PlayerFixtureStats] (
     CONSTRAINT ChkPositiveFouls CHECK ([Fouls] >= 0),
     CONSTRAINT ChkPositiveGameTime CHECK ([GameTimeInMinutes] >= 0)
 );
-GO
