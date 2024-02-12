@@ -12,7 +12,7 @@ def main():
 
     for index, name in enumerate(teams):
         is_part_of_club = 1 if index < CLUB_TEAMS_COUNT else 0
-        line = "({}, {}, {})".format(index, name, is_part_of_club)
+        line = "({}, '{}', {})".format(index, name, is_part_of_club)
         lines.append(line)
 
     print(*lines, sep=",\n")
