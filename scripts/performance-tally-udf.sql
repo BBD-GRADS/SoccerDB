@@ -1,22 +1,46 @@
 --liquibase formatted sql
---changeset faheemah:1
+--changeset verushan:3
 
-CREATE VIEW ViewFixtureResults AS
+CREATE FUNCTION UdfGetTeamTally (@TeamID int) RETURNS TABLE AS RETURN
 SELECT
-    Fixture.FixtureID,
-    Team.Name AS TeamName,
-    Opponent.Name AS OpponentName,
-    Fixture.Date,
-    CASE
-        WHEN Result.GoalsFor > Result.GoalsAgainst THEN 'Win'
-        WHEN Result.GoalsFor < Result.GoalsAgainst THEN 'Loss'
-        ELSE 'Draw'
-    END AS Result
+    Team.[Name],
+    COUNT(
+        CASE
+            WHEN GoalsFor > GoalsAgainst THEN 1
+            WHEN (
+                Fixture.[OpponentID] = @TeamID
+                AND GoalsAgainst > GoalsFor
+            ) THEN 1
+        END
+    ) AS Wins,
+    COUNT(
+        CASE
+            WHEN GoalsFor < GoalsAgainst THEN 1
+            WHEN (
+                Fixture.[OpponentID] = @TeamID
+                AND GoalsAgainst < GoalsFor
+            ) THEN 1
+        END
+    ) AS Losses,
+    COUNT(
+        CASE
+            WHEN Result.[GoalsFor] = Result.[GoalsAgainst] THEN 1
+            WHEN (
+                Fixture.[OpponentID] = @TeamID
+                AND GoalsAgainst = GoalsFor
+            ) THEN 1
+        END
+    ) AS Draws
 FROM
-    dbo.Fixture Fixture
-JOIN
-    [dbo].Team Team ON Fixture.TeamID = Team.TeamID
-JOIN
-    [dbo].Team Opponent ON Fixture.OpponentID = Opponent.TeamID
-LEFT JOIN
-    [dbo].Result Result ON Fixture.FixtureID = Result.ResultID;
+    Team,
+    Fixture
+    LEFT JOIN Result ON Fixture.[FixtureID] = Result.[FixtureID]
+WHERE
+    Team.[TeamID] = @TeamID
+    AND (
+        Fixture.[TeamID] = @TeamID
+        OR Fixture.[OpponentID] = @TeamID
+    )
+    AND YEAR(Fixture.Date) = 2025
+GROUP BY
+    Team.[Name];
