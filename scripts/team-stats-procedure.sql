@@ -33,5 +33,5 @@ BEGIN
     GROUP BY
         t.TeamID, t.Name
     ORDER BY
-        Pts DESC;
+        Pts DESC
 END;
