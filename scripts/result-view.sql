@@ -6,7 +6,7 @@ SELECT
     Fixture.FixtureID,
     Team.Name AS TeamName,
     Opponent.Name AS OpponentName,
-    Fixture.Date,
+    FORMAT(Fixture.Date, 'dddd, dd MMM yyyy ''at'' HH:mm') AS FixtureTime,
     CASE
         WHEN Result.GoalsFor > Result.GoalsAgainst THEN 'Win'
         WHEN Result.GoalsFor < Result.GoalsAgainst THEN 'Loss'
@@ -19,4 +19,6 @@ JOIN
 JOIN
     [dbo].Team Opponent ON Fixture.OpponentID = Opponent.TeamID
 LEFT JOIN
-    [dbo].Result Result ON Fixture.FixtureID = Result.ResultID;
+    [dbo].Result Result ON Fixture.FixtureID = Result.ResultID
+WHERE
+    Fixture.Date <= GETDATE()
