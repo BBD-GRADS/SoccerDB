@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset faheemah:1
 
-CREATE PROCEDURE GetTeamStats
+CREATE PROCEDURE ProcGetTeamStats
 AS
 BEGIN
     SELECT
