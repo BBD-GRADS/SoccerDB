@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset verushan:2
 
-CREATE PROCEDURE ProcGetSeasonScore AS
+CREATE PROCEDURE ProcGetPlayerSeasonScore AS
 SELECT
     Player.[PlayerID],
     Player.[Name],
