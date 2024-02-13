@@ -21,4 +21,4 @@ JOIN
 LEFT JOIN
     [dbo].Result Result ON Fixture.FixtureID = Result.ResultID
 WHERE
-    Fixture.Date <= GETDATE()
+    Fixture.Date <= GETDATE();
