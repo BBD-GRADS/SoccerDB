@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset verushan:3
+--changeset verushan:1
 
 CREATE FUNCTION UdfGetTeamTally (@TeamID int) RETURNS TABLE AS RETURN
 SELECT
@@ -41,6 +41,6 @@ WHERE
         Fixture.[TeamID] = @TeamID
         OR Fixture.[OpponentID] = @TeamID
     )
-    AND YEAR(Fixture.Date) = 2025
+    AND YEAR(Fixture.Date) = YEAR(GETDATE())
 GROUP BY
     Team.[Name];
