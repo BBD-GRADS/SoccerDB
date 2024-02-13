@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset verushan:1
+
 CREATE FUNCTION UdfGetMaxGoalCount (@Date DATE) 
 RETURNS int 
 AS 
