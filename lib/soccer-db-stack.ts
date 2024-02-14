@@ -1,7 +1,8 @@
 import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
 import { aws_ec2 as ec2, aws_iam as iam, aws_rds as rds } from "aws-cdk-lib";
+import { Construct } from "constructs";
 import { GitHubStackProps } from "./github-stack-props";
+import { Effect, PolicyDocument, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class SoccerDbStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: GitHubStackProps) {
@@ -80,7 +81,7 @@ export class SoccerDbStack extends cdk.Stack {
             // databaseName: "soccerDb",
             publiclyAccessible: true, //false with host
             deletionProtection: false,
-            credentials: rds.Credentials.fromGeneratedSecret('admin', {secretName: 'soccerDbInstanceSecret'}),
+            credentials: rds.Credentials.fromGeneratedSecret('admin', { secretName: 'soccerDbInstanceSecret' }),
             securityGroups: [soccerDbSG],
         });
         //dbInstance.connections.allowFrom(host, ec2.Port.tcp(1433));
@@ -103,14 +104,22 @@ export class SoccerDbStack extends cdk.Stack {
             },
         };
 
-        new iam.Role(this, 'exampleGitHubDeployRole', {
+        new iam.Role(this, 'gitHubDeployRole', {
             assumedBy: new iam.WebIdentityPrincipal(
                 ghProvider.openIdConnectProviderArn,
                 conditions
             ),
-            managedPolicies: [
-                iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
-            ],
+            inlinePolicies: {
+                "allowAssumeCDKRoles": new PolicyDocument({
+                    statements: [
+                        new PolicyStatement({
+                            actions: ["sts:AssumeRole"],
+                            effect: Effect.ALLOW,
+                            resources: ["arn:aws:iam::*:role/cdk-*"]
+                        })
+                    ],
+                }),
+            },
             roleName: 'soccerDbDeployRole',
             description:
                 'This role is used via GitHub Actions to deploy with AWS CDK on the target AWS account',
