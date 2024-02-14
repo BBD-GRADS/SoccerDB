@@ -113,7 +113,7 @@ FROM
 END
 END;
 
---changeset verushan:2
+--changeset verushan:3
 CREATE TRIGGER TrgPlayerStatsInsert ON PlayerFixtureStats INSTEAD OF
 INSERT
     AS BEGIN IF EXISTS (
