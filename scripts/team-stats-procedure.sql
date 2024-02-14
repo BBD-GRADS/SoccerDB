@@ -36,7 +36,6 @@ BEGIN
         Pts DESC
 END;
 
---liquibase formatted sql
 --changeset verushan:1
 
 ALTER PROCEDURE ProcGetTeamStats
