@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset verushan:1
 
-CREATE PROCEDURE ViewUpcomingMatches AS
+CREATE PROCEDURE ProcShowUpcomingMatches AS
 BEGIN
 SELECT
     Fixture.[FixtureID],
