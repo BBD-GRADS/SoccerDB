@@ -26,8 +26,5 @@ jobs:
       - name: Install global dependencies
         run: npm install -g aws-cdk
 
-      - name: Install project dependencies
-        run: npm install
-
       - name: Deploy Infrastructure
         run: cdk deploy --require-approval never
