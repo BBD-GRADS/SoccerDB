@@ -1,29 +1,16 @@
 --liquibase formatted sql
 --changeset verushan:1
-USE master;
-GO
-
-ALTER DATABASE [SoccerDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-
-DROP DATABASE IF EXISTS [SoccerDB];
-
-CREATE DATABASE SoccerDB;
-GO
-
-USE SoccerDB;
-GO
-
 CREATE TABLE [dbo].[Team] (
     [TeamID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [Name] [varchar](120) NOT NULL,
     [IsOurClub] [bit] NOT NULL DEFAULT 1
 );
-GO
+
 CREATE TABLE [dbo].[StaffCode] (
     [StaffCodeID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [StaffCodeType] [varchar](120) NOT NULL
 );
-GO
+
 CREATE TABLE [dbo].[Staff] (
     [StaffID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [StaffCodeID] [int] NOT NULL,
@@ -33,12 +20,12 @@ CREATE TABLE [dbo].[Staff] (
     FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
     FOREIGN KEY (StaffCodeID) REFERENCES [dbo].StaffCode(StaffCodeID)
 );
-GO
+
 CREATE TABLE [dbo].[PositionCode] (
     [PositionID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [PositionName] [varchar](120) NOT NULL
 );
-GO
+
 CREATE TABLE [dbo].[Player] (
     [PlayerID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [PositionCodeID] [int] NOT NULL,
@@ -53,7 +40,7 @@ CREATE TABLE [dbo].[Player] (
         OR [DateOfBirth] IS NULL
     )
 );
-GO
+
 CREATE TABLE [dbo].[Fixture] (
     [FixtureID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [TeamID] [int] NOT NULL,
@@ -63,7 +50,7 @@ CREATE TABLE [dbo].[Fixture] (
     FOREIGN KEY (TeamID) REFERENCES [dbo].Team(TeamID),
     FOREIGN KEY (OpponentID) REFERENCES [dbo].Team(TeamID)
 );
-GO
+
 CREATE TABLE [dbo].[Result] (
     [ResultID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [FixtureID] [int] NOT NULL,
@@ -74,7 +61,7 @@ CREATE TABLE [dbo].[Result] (
     CONSTRAINT ChkPositiveGoalsAgainst CHECK ([GoalsAgainst] >= 0),
     CONSTRAINT UniqueFixtureConstraint UNIQUE (FixtureID)
 );
-GO
+
 CREATE TABLE [dbo].[PlayerFixtureStats] (
     [PlayerFixtureStatsID] [int] IDENTITY(1, 1) PRIMARY KEY NOT NULL,
     [PlayerID] [int] NOT NULL,
@@ -100,7 +87,7 @@ CREATE TABLE [dbo].[PlayerFixtureStats] (
     CONSTRAINT ChkPositiveFouls CHECK ([Fouls] >= 0),
     CONSTRAINT ChkPositiveGameTime CHECK ([GameTimeInMinutes] >= 0)
 );
-GO
+
 --changeset verushan:2
 CREATE TRIGGER TrgResultsInsert ON Result INSTEAD OF
 INSERT
@@ -128,7 +115,7 @@ FROM
     Inserted I
 END
 END;
-GO
+
 --changeset verushan:3
 CREATE TRIGGER TrgPlayerStatsInsert ON PlayerFixtureStats INSTEAD OF
 INSERT
@@ -176,4 +163,3 @@ FROM
     Inserted I
 END
 END;
-GO
