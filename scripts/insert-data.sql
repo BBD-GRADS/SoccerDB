@@ -301,19 +301,20 @@ SET
     IDENTITY_INSERT Result ON
 INSERT INTO
     [dbo].[Result] (
-        [FixtureID],
-        [GoalsFor],
-        [GoalsAgainst]
+	[ResultID],
+    [FixtureID],
+    [GoalsFor],
+    [GoalsAgainst]
     )
 VALUES
-    (4, 4, 2),
-	(6, 0, 2),
-	(20, 1, 2),
-	(33, 0, 2),
-	(34, 1, 3),
-	(42, 2, 2),
-	(44, 2, 3),
-	(46, 3, 3)
+    (1, 4, 4, 2),
+	(2, 6, 0, 2),
+	(3, 20, 1, 2),
+	(4, 33, 0, 2),
+	(5, 34, 1, 3),
+	(6, 42, 2, 2),
+	(7, 44, 2, 3),
+	(8, 46, 3, 3)
 SET
     IDENTITY_INSERT Result OFF
 
@@ -321,6 +322,7 @@ SET
     IDENTITY_INSERT PlayerFixtureStats ON
 INSERT INTO
     [dbo].[PlayerFixtureStats] (
+	[PlayerFixtureStatsID],
         [PlayerID],
         [FixtureID],
         [Saves],
