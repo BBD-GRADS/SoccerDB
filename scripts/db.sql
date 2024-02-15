@@ -58,7 +58,8 @@ CREATE TABLE [dbo].[Result] (
     [GoalsAgainst] [int] NOT NULL DEFAULT 0,
     FOREIGN KEY (FixtureID) REFERENCES [dbo].Fixture(FixtureID),
     CONSTRAINT ChkPositiveGoalsFor CHECK ([GoalsFor] >= 0),
-    CONSTRAINT ChkPositiveGoalsAgainst CHECK ([GoalsAgainst] >= 0)
+    CONSTRAINT ChkPositiveGoalsAgainst CHECK ([GoalsAgainst] >= 0),
+    CONSTRAINT UniqueFixtureConstraint UNIQUE (FixtureID)
 );
 
 CREATE TABLE [dbo].[PlayerFixtureStats] (
@@ -75,6 +76,8 @@ CREATE TABLE [dbo].[PlayerFixtureStats] (
     [GameTimeInMinutes] [int] NOT NULL DEFAULT 0,
     FOREIGN KEY (PlayerID) REFERENCES [dbo].Player(PlayerID),
     FOREIGN KEY (FixtureID) REFERENCES [dbo].Fixture(FixtureID),
+    
+    CONSTRAINT UniqueFixturePlayerConstraint UNIQUE (PlayerID, FixtureID),
     CONSTRAINT ChkPositiveSaves CHECK ([Saves] >= 0),
     CONSTRAINT ChkPositiveAssists CHECK ([Assists] >= 0),
     CONSTRAINT ChkPositiveGoals CHECK ([Goals] >= 0),
