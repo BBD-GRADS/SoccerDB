@@ -1,13 +1,34 @@
-# Soccer DB Setup
+# Soccer DB
 
-## First time deployment and setup
+## Table of Contents
 
-First install NodeJS
+- [The Team](#the-team)
+- [Documentation]()
+- [Initial Deployment And Setup](#initial-deployment-and-setup)
+- [Additional Deployments](#additional-deployments)
+- [Useful Commands](#useful-commands)
+
+## The Team
+
+Avi  
+Faheema  
+Ivan  
+JC  
+Verushan
+
+## Documentation
+
+Confluence - https://avishkar-bbd.atlassian.net/wiki/spaces/SD/pages  
+Jira - https://avishkar-bbd.atlassian.net/jira/software/projects/SD/boards/1
+
+## Initial Deployment And Setup
+
+First install NodeJS from https://nodejs.org/en/download/
 
 Then to install the AWS CLI run
 
  ``` 
- npm install -g aws-cli 
+ npm i -g aws-cli 
  ```  
 
 Then to configure your AWS CLI credentials run
@@ -22,15 +43,15 @@ Then to install the AWS CDK run
 npm i -g aws-cdk  
 ```  
 
-Then to deploy the resources required by the AWS CDK to your AWS account run
+Then to deploy the resources required by the AWS CDK to your AWS account, navigate to this project in your terminal and
+run
 
 ```  
 cdk bootstrap  
 ```  
 
 Configure a role on AWS IAM to use for your deployments with the following policy statements attached, which will
-allow  
-your workflow to assume the roles required by the CDK for deployments
+allow your workflow to assume the roles required by the CDK for deployments
 
 ```  
 {  
@@ -79,7 +100,7 @@ Now you can run the workflow again with any of the changelog files found in the 
 create  
 the functions, views and procedures as needed.
 
-## Further Deployments
+## Additional Deployments
 
 Any new changes to the infrastructure as code can be deployed using the "*Deploy Infrastructure*" workflow on GitHub  
 actions
@@ -88,7 +109,7 @@ Any additional SQL scripts you wish to run must be added to the */scripts* direc
 running  
 the  "*Deploy DB changes*" workflow from GitHub actions.
 
-## Useful commands
+## Useful Commands
 
 * `cdk deploy`  deploy this stack to your default AWS account/region (manual deployment)
 * `cdk diff`    compare deployed stack with current state
