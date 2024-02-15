@@ -5,26 +5,26 @@ import { GitHubStackProps } from "./github-stack-props";
 import { Effect, PolicyDocument, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class SoccerDbStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: GitHubStackProps) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props?: GitHubStackProps) {
+        super(scope, id, props);
 
-    const vpc = new ec2.Vpc(this, "soccerDbVpc", {
-      maxAzs: 2,
-      subnetConfiguration: [
-        {
-          name: "PublicSubnet",
-          subnetType: ec2.SubnetType.PUBLIC,
-        },
-      ],
-    });
+        const vpc = new ec2.Vpc(this, "soccerDbVpc", {
+            maxAzs: 2,
+            subnetConfiguration: [
+                {
+                    name: "PublicSubnet",
+                    subnetType: ec2.SubnetType.PUBLIC,
+                },
+            ],
+        });
 
-    const soccerDbSG = new ec2.SecurityGroup(this, "soccerDbSG", {
-      vpc,
-      allowAllOutbound: false,
-    });
+        const soccerDbSG = new ec2.SecurityGroup(this, "soccerDbSG", {
+            vpc,
+            allowAllOutbound: false,
+        });
 
-    soccerDbSG.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
-    soccerDbSG.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
+        soccerDbSG.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
+        soccerDbSG.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
 
     const dbInstance = new rds.DatabaseInstance(this, "soccerDbInstance", {
       engine: rds.DatabaseInstanceEngine.sqlServerEx({
@@ -77,6 +77,11 @@ export class SoccerDbStack extends cdk.Stack {
                             actions: ["sts:AssumeRole"],
                             effect: Effect.ALLOW,
                             resources: ["arn:aws:iam::*:role/cdk-*"]
+                        }),
+                        new PolicyStatement({
+                            actions: ["secretsmanager:GetSecretValue"],
+                            effect: Effect.ALLOW,
+                            resources: ["*"]
                         })
                     ],
                 }),
