@@ -506,3 +506,13 @@ VALUES
 (100, 42, 0, 0, 2, 1, 1, 0, 0, 68),
 (100, 44, 1, 1, 2, 0, 1, 0, 2, 73),
 (100, 46, 0, 2, 1, 0, 0, 0, 1, 26)
+
+--changeset verushan:1
+INSERT INTO
+    [dbo].[Result] (
+    [FixtureID],
+    [GoalsFor],
+    [GoalsAgainst]
+    )
+VALUES
+    (25, 4, 2)
