@@ -38,4 +38,4 @@ RIGHT JOIN Team T ON T.TeamID = Player.TeamID
 RIGHT JOIN Fixture F ON F.TeamID = T.TeamID
 RIGHT JOIN PlayerFixtureStats PFS ON Player.PlayerID = PFS.PlayerID AND F.FixtureID = PFS.FixtureID
 WHERE
-    YEAR([Date]) = YEAR(GETDATE())
+    YEAR([Date]) = YEAR(GETDATE());
