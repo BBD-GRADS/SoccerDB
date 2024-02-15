@@ -26,7 +26,9 @@ for player in range(1, 21):
                  random.choice([0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
                  random.randint(0, 7), random.choice([0, 0, 0, 0, 1, 1]),
                  random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]), random.choice([0, 0, 0, 1, 1, 2])))
-        countStat = countStat + 1
+
+            countStat = countStat + 1
+
 
 for player in range(21, 41):
     for match in range(11, 21):
@@ -36,7 +38,9 @@ for player in range(21, 41):
                  random.choice([0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
                  random.randint(0, 7), random.choice([0, 0, 0, 0, 1, 1]),
                  random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]), random.choice([0, 0, 0, 1, 1, 2])))
-        countStat = countStat + 1
+
+            countStat = countStat + 1
+
 
 for player in range(41, 61):
     for match in range(21, 31):
@@ -46,7 +50,9 @@ for player in range(41, 61):
                  random.choice([0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
                  random.randint(0, 7), random.choice([0, 0, 0, 0, 1, 1]),
                  random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]), random.choice([0, 0, 0, 1, 1, 2])))
-        countStat = countStat + 1
+
+            countStat = countStat + 1
+
 
 for player in range(61, 81):
     for match in range(31, 41):
@@ -56,7 +62,9 @@ for player in range(61, 81):
                  random.choice([0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
                  random.randint(0, 7), random.choice([0, 0, 0, 0, 1, 1]),
                  random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]), random.choice([0, 0, 0, 1, 1, 2])))
-        countStat = countStat + 1
+
+            countStat = countStat + 1
+
 
 for player in range(81, 101):
     for match in range(41, 51):
@@ -66,7 +74,9 @@ for player in range(81, 101):
                  random.choice([0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
                  random.randint(0, 7), random.choice([0, 0, 0, 0, 1, 1]),
                  random.choice([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]), random.choice([0, 0, 0, 1, 1, 2])))
-        countStat = countStat + 1
+
+            countStat = countStat + 1
+
 
 # Print the list
 for item in stats:
