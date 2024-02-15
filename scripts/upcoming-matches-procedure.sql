@@ -1,8 +1,9 @@
 --liquibase formatted sql
 --changeset verushan:1
 
-CREATE VIEW ViewUpcomingMatches AS
-SELECT TOP(100) PERCENT
+CREATE PROCEDURE ProcShowUpcomingMatches AS
+BEGIN
+SELECT
     Fixture.[FixtureID],
     Team.[Name] AS TeamName,
     Opponent.[Name] AS OpponentName,
@@ -16,4 +17,7 @@ LEFT JOIN
 LEFT JOIN
     [dbo].Result Result ON Fixture.FixtureID = Result.ResultID
 WHERE
-    Fixture.Date >= GETDATE();
+    Fixture.[Date] >= GETDATE()
+ORDER BY
+    Fixture.[Date] ASC;
+END;

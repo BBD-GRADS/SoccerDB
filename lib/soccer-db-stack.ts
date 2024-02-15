@@ -5,104 +5,65 @@ import { GitHubStackProps } from "./github-stack-props";
 import { Effect, PolicyDocument, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class SoccerDbStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props?: GitHubStackProps) {
-        super(scope, id, props);
+  constructor(scope: Construct, id: string, props?: GitHubStackProps) {
+    super(scope, id, props);
 
-        const vpc = new ec2.Vpc(this, "soccerDbVpc", {
-            maxAzs: 2,
-            subnetConfiguration: [
-                {
-                    name: "PublicSubnet",
-                    subnetType: ec2.SubnetType.PUBLIC,
-                },
-                {
-                    name: "PrivateSubnet",
-                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
-                },
-            ],
-        });
+    const vpc = new ec2.Vpc(this, "soccerDbVpc", {
+      maxAzs: 2,
+      subnetConfiguration: [
+        {
+          name: "PublicSubnet",
+          subnetType: ec2.SubnetType.PUBLIC,
+        },
+      ],
+    });
 
-        const soccerDbSG = new ec2.SecurityGroup(this, "soccerDbSG", {
-            vpc,
-            allowAllOutbound: false,
-        });
+    const soccerDbSG = new ec2.SecurityGroup(this, "soccerDbSG", {
+      vpc,
+      allowAllOutbound: false,
+    });
 
-        soccerDbSG.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433)); //remove with host
-        soccerDbSG.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433))
+    soccerDbSG.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
+    soccerDbSG.addEgressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(1433));
 
-        // const bastionHostSG = new ec2.SecurityGroup(this, "bastionHostSG", {
-        //   vpc,
-        //   allowAllOutbound: false,
-        // });
+    const dbInstance = new rds.DatabaseInstance(this, "soccerDbInstance", {
+      engine: rds.DatabaseInstanceEngine.sqlServerEx({
+        version: rds.SqlServerEngineVersion.VER_16,
+      }),
+      instanceType: ec2.InstanceType.of(
+        ec2.InstanceClass.T3,
+        ec2.InstanceSize.MICRO
+      ),
+      vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PUBLIC,
+      },
+      allocatedStorage: 20,
+      publiclyAccessible: true,
+      deletionProtection: false,
+      credentials: rds.Credentials.fromGeneratedSecret("admin", {
+        secretName: "soccerDbInstanceSecret",
+      }),
+      securityGroups: [soccerDbSG],
+    });
 
-        // bastionHostSG.addEgressRule(
-        //   ec2.Peer.anyIpv4(),
-        //   ec2.Port.tcp(443),
-        //   "Allow only HTTPS outbound"
-        // );
+    // Create role for github actions to assume
+    const githubDomain = "token.actions.githubusercontent.com";
 
-        // const bastionHostRole = new iam.Role(this, "BastionHostRole", {
-        //   assumedBy: new iam.ServicePrincipal("ec2.amazonaws.com"),
-        //   description: "Role for bastion host to enable SSM access",
-        // });
+    const ghProvider = new iam.OpenIdConnectProvider(this, "githubProvider", {
+      url: `https://${githubDomain}`,
+      clientIds: ["sts.amazonaws.com"],
+    });
 
-        // bastionHostRole.addManagedPolicy(
-        //   iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonSSMManagedInstanceCore")
-        // );
+    const iamRepoDeployAccess = props?.repositoryConfig.map(
+      (r) => `repo:${r.owner}/${r.repo}:${r.filter ?? "*"}`
+    );
 
-        // const host = new ec2.BastionHostLinux(this, "BastionHost", {
-        //   vpc,
-        //   securityGroup: bastionHostSG,
-        //   subnetSelection: { subnetType: ec2.SubnetType.PUBLIC },
-        //   blockDevices: [
-        //     {
-        //       deviceName: "/dev/sdf",
-        //       volume: ec2.BlockDeviceVolume.ebs(10, {
-        //         encrypted: true,
-        //       }),
-        //     },
-        //   ],
-        // });
-
-        const dbInstance = new rds.DatabaseInstance(this, "soccerDbInstance", {
-
-            engine: rds.DatabaseInstanceEngine.sqlServerEx({
-                version: rds.SqlServerEngineVersion.VER_16,
-            }),
-            instanceType: ec2.InstanceType.of(
-                ec2.InstanceClass.T3,
-                ec2.InstanceSize.MICRO
-            ),
-            vpc,
-            vpcSubnets: {
-                subnetType: ec2.SubnetType.PUBLIC, //private with host
-            },
-            allocatedStorage: 20,
-            // databaseName: "soccerDb",
-            publiclyAccessible: true, //false with host
-            deletionProtection: false,
-            credentials: rds.Credentials.fromGeneratedSecret('admin', { secretName: 'soccerDbInstanceSecret' }),
-            securityGroups: [soccerDbSG],
-        });
-        //dbInstance.connections.allowFrom(host, ec2.Port.tcp(1433));
-
-        // Create role for github actions to assume
-        const githubDomain = 'token.actions.githubusercontent.com';
-
-        const ghProvider = new iam.OpenIdConnectProvider(this, 'githubProvider', {
-            url: `https://${githubDomain}`,
-            clientIds: ['sts.amazonaws.com'],
-        });
-
-        const iamRepoDeployAccess = props?.repositoryConfig.map(
-            (r) => `repo:${r.owner}/${r.repo}:${r.filter ?? '*'}`
-        );
-
-        const conditions: iam.Conditions = {
-            StringLike: {
-                [`${githubDomain}:sub`]: iamRepoDeployAccess,
-            },
-        };
+    const conditions: iam.Conditions = {
+      StringLike: {
+        [`${githubDomain}:sub`]: iamRepoDeployAccess,
+      },
+    };
 
         new iam.Role(this, 'gitHubDeployRole', {
             assumedBy: new iam.WebIdentityPrincipal(
