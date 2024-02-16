@@ -48,32 +48,23 @@ run
 
 ```  
 cdk bootstrap  
-```  
+```
 
-Configure a role on AWS IAM to use for your deployments with the following policy statements attached, which will
-allow your workflow to assume the roles required by the CDK for deployments
+Then to deploy your intial resources run
 
-```  
-{  
- "Action": "sts:AssumeRole", 
- "Resource": "arn:aws:iam::*:role/cdk-*", 
- "Effect": "Allow"
-},  
-{  
- "Action": "secretsmanager:GetSecretValue",  
- "Resource": "*",
- "Effect": Allow
-}  
-```  
+```
+cdk deploy
+```
 
-Configure the following repository variables for the actions in GitHub
+Configure the following repository variables for the actions in GitHub. The deploy role arn can be found  
+in AWS IAM roles under the "soccerDbDeployRole".
 
 ```  
 key: AWS_SECRET_NAME  
 value: soccerDbInstanceSecret  
   
 key: AWS_DEPLOY_ROLE  
-value: <The arn of the deploy role created above>  
+value: <The arn of the deploy role>  
   
 key: AWS_REGION  
 value: The AWS region to deploy to eg. eu-west-1  
