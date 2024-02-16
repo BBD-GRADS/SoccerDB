@@ -11,7 +11,7 @@
 ## The Team
 
 Avi  
-Faheema  
+Faheemah  
 Ivan  
 JC  
 Verushan
